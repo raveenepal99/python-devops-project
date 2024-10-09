@@ -25,14 +25,14 @@ jobs:
 
       - name: Run tests
         env:
-          INSTRUMENTATION_KEY: ${{secrets.INSTRUMENTATION_KEY}}
+          INSTRUMENTATION_KEY: ${{ secrets.INSTRUMENTATION_KEY }}
         run: |
           pytest
 
   deploy-to-test:
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: ${{ github.ref != 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.ref_name != 'main' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -47,7 +47,7 @@ jobs:
   deploy-to-production:
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
