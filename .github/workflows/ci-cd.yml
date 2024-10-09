@@ -45,7 +45,7 @@ jobs:
           package: '.'
 
   deploy-to-production:
-    needs: build-and-test
+    needs: [build-and-test, deploy-to-test]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
