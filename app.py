@@ -10,7 +10,7 @@ import logging
 app = Flask(__name__)
 
 # Instrumentation Key from environment variable
-instrumentation_key = os.environ.get('APPINSIGHTS_INSTRUMENTATIONKEY')
+instrumentation_key = os.environ.get('INSTRUMENTATION_KEY')
 
 # Setup logging
 logger = logging.getLogger(__name__)
