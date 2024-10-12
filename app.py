@@ -4,7 +4,6 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 from opencensus.ext.azure.log_exporter import AzureLogHandler
 from opencensus.ext.azure.trace_exporter import AzureExporter
 from opencensus.trace.samplers import ProbabilitySampler
-from opencensus.trace.tracer import Tracer
 import logging
 
 app = Flask(__name__)
@@ -12,8 +11,12 @@ app = Flask(__name__)
 # Instrumentation Key from environment variable
 instrumentation_key = os.environ.get('INSTRUMENTATION_KEY')
 
+if not instrumentation_key:
+    raise ValueError("INSTRUMENTATION_KEY environment variable is not set.")
+
 # Setup logging
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)  # Set appropriate logging level
 logger.addHandler(AzureLogHandler(connection_string=f'InstrumentationKey={instrumentation_key}'))
 
 # Setup tracing
