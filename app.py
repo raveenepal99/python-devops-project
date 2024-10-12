@@ -25,7 +25,6 @@ middleware = FlaskMiddleware(
     exporter=AzureExporter(connection_string=f'InstrumentationKey={instrumentation_key}'),
     sampler=ProbabilitySampler(rate=1.0)
 )
-
 @app.route('/')
 def home():
     logger.warning('Home page accessed')
