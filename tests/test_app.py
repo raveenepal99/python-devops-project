@@ -16,4 +16,4 @@ def client():
 def test_home(client):
     response = client.get('/')
     assert response.status_code == 200
-    assert b'Hello, DevOps Pipeline! This is an updated message.' in response.data
+    assert b'Hello, DevOps Pipeline! This is a simplified message.' in response.data
