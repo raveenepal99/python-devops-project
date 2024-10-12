@@ -1,35 +1,33 @@
 from flask import Flask
 import os
-from opencensus.ext.flask.flask_middleware import FlaskMiddleware
-from opencensus.ext.azure.log_exporter import AzureLogHandler
-from opencensus.ext.azure.trace_exporter import AzureExporter
-from opencensus.trace.samplers import ProbabilitySampler
 import logging
 
 app = Flask(__name__)
 
 # Instrumentation Key from environment variable
-instrumentation_key = os.environ.get('INSTRUMENTATION_KEY')
+import logging
+from flask import Flask
+import os
 
-if not instrumentation_key:
-    raise ValueError("INSTRUMENTATION_KEY environment variable is not set.")
+app = Flask(__name__)
 
-# Setup logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)  # Set appropriate logging level
-logger.addHandler(AzureLogHandler(connection_string=f'InstrumentationKey={instrumentation_key}'))
+# Set up logging
+instrumentation_key = os.environ.get('APPLICATIONINSIGHTS_CONNECTION_STRING')
+if instrumentation_key:
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)  # Adjust log level as needed
 
-# Setup tracing
-middleware = FlaskMiddleware(
-    app,
-    exporter=AzureExporter(connection_string=f'InstrumentationKey={instrumentation_key}'),
-    sampler=ProbabilitySampler(rate=1.0)
-)
+    # Assuming the key is set, it will send logs to Application Insights
+    logger.info("Application Insights logging is configured.")
+else:
+    print("No Application Insights connection string found.")
+
 @app.route('/')
 def home():
-    logger.warning('Home page accessed')
+    logger.info('Home page accessed')
     return 'Hello, DevOps Pipeline! This is an updated message.'
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 80))
+    port = int(os.environ.get('PORT', 8000))
     app.run(host='0.0.0.0', port=port)
+
