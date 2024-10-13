@@ -12,7 +12,7 @@ html_template = """
         <title>Simple Counter App</title>
     </head>
     <body>
-        <h1>Counter App</h1>
+        <h1>Counter Application - Devops</h1>
         <p>Counter Value: {{ counter }}</p>
         <form action="/increment" method="post">
             <button type="submit">Increment</button>
