@@ -22,8 +22,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          # Specifying compatible versions of Flask, Jinja2, and MarkupSafe
-          pip install Flask==1.1.2 Jinja2==2.11.3 MarkupSafe==2.0.1
           pip install -r requirements.txt
 
       - name: Run tests
