@@ -1,11 +1,10 @@
 import sys
 import os
 
-# Append the parent directory to the system path so that `app.py` can be imported.
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import pytest
-from app import app  # Now this should work without ModuleNotFoundError
+from app import app 
 
 @pytest.fixture
 def client():
